@@ -9,6 +9,7 @@
  * UC6 - FIFO vs LIFO using Queue and Stack
  * UC7 - Palindrome Using Deque
  * UC8 - Palindrome Using Singly Linked List
+ * UC9 - Recursive Palindrome Checker
  */
 
 import java.util.*;
@@ -28,6 +29,22 @@ public class PalindromeCheckerApp {
             next = null;
         }
     }
+
+    // ===== Recursive Method (UC9) =====
+    static boolean isPalindromeRecursive(String str, int start, int end) {
+
+        // Base Condition
+        if(start >= end)
+            return true;
+
+        // Compare characters
+        if(str.charAt(start) != str.charAt(end))
+            return false;
+
+        // Recursive Call
+        return isPalindromeRecursive(str, start+1, end-1);
+    }
+
 
     public static void main(String[] args) {
 
@@ -54,7 +71,7 @@ public class PalindromeCheckerApp {
         // ========== UC3 ==========
         String reversed = "";
 
-        for(int i = original.length()-1; i>=0; i--)
+        for(int i=original.length()-1;i>=0;i--)
             reversed = reversed + original.charAt(i);
 
         System.out.println("UC3 Result:");
@@ -70,16 +87,16 @@ public class PalindromeCheckerApp {
         // ========== UC4 ==========
         char arr[] = original.toCharArray();
 
-        int start = 0;
-        int end = arr.length-1;
+        int start=0;
+        int end=arr.length-1;
 
-        boolean result4 = true;
+        boolean result4=true;
 
-        while(start < end)
+        while(start<end)
         {
-            if(arr[start] != arr[end])
+            if(arr[start]!=arr[end])
             {
-                result4 = false;
+                result4=false;
                 break;
             }
             start++;
@@ -97,12 +114,12 @@ public class PalindromeCheckerApp {
 
 
         // ========== UC5 ==========
-        Stack<Character> stack = new Stack<>();
+        Stack<Character> stack=new Stack<>();
 
         for(int i=0;i<original.length();i++)
             stack.push(original.charAt(i));
 
-        boolean result5 = true;
+        boolean result5=true;
 
         for(int i=0;i<original.length();i++)
         {
@@ -124,8 +141,8 @@ public class PalindromeCheckerApp {
 
 
         // ========== UC6 ==========
-        Queue<Character> queue = new LinkedList<>();
-        Stack<Character> stack2 = new Stack<>();
+        Queue<Character> queue=new LinkedList<>();
+        Stack<Character> stack2=new Stack<>();
 
         for(int i=0;i<original.length();i++)
         {
@@ -133,7 +150,7 @@ public class PalindromeCheckerApp {
             stack2.push(original.charAt(i));
         }
 
-        boolean result6 = true;
+        boolean result6=true;
 
         for(int i=0;i<original.length();i++)
         {
@@ -155,12 +172,12 @@ public class PalindromeCheckerApp {
 
 
         // ========== UC7 ==========
-        Deque<Character> deque = new ArrayDeque<>();
+        Deque<Character> deque=new ArrayDeque<>();
 
         for(int i=0;i<original.length();i++)
             deque.addLast(original.charAt(i));
 
-        boolean result7 = true;
+        boolean result7=true;
 
         while(deque.size()>1)
         {
@@ -182,15 +199,12 @@ public class PalindromeCheckerApp {
 
 
         // ========== UC8 ==========
-        // Singly Linked List Method
+        Node head=null;
+        Node tail=null;
 
-        Node head = null;
-        Node tail = null;
-
-        // Convert string to linked list
         for(int i=0;i<original.length();i++)
         {
-            Node newNode = new Node(original.charAt(i));
+            Node newNode=new Node(original.charAt(i));
 
             if(head==null)
             {
@@ -204,7 +218,6 @@ public class PalindromeCheckerApp {
             }
         }
 
-        // Find middle using fast & slow pointer
         Node slow=head;
         Node fast=head;
 
@@ -214,7 +227,6 @@ public class PalindromeCheckerApp {
             fast=fast.next.next;
         }
 
-        // Reverse second half
         Node prev=null;
         Node curr=slow;
 
@@ -226,7 +238,6 @@ public class PalindromeCheckerApp {
             curr=next;
         }
 
-        // Compare halves
         Node first=head;
         Node second=prev;
 
@@ -246,6 +257,19 @@ public class PalindromeCheckerApp {
         System.out.println("UC8 Result:");
 
         if(result8)
+            System.out.println(original + " is a Palindrome");
+        else
+            System.out.println(original + " is NOT a Palindrome");
+
+        System.out.println();
+
+
+        // ========== UC9 ==========
+        boolean result9 = isPalindromeRecursive(original,0,original.length()-1);
+
+        System.out.println("UC9 Result:");
+
+        if(result9)
             System.out.println(original + " is a Palindrome");
         else
             System.out.println(original + " is NOT a Palindrome");
