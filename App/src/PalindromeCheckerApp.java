@@ -6,9 +6,12 @@
  * UC3 - Palindrome Using String Reverse
  * UC4 - Palindrome Using Character Array (Two-Pointer)
  * UC5 - Palindrome Using Stack
+ * UC6 - FIFO vs LIFO using Queue and Stack
  */
 
 import java.util.Stack;
+import java.util.Queue;
+import java.util.LinkedList;
 
 public class PalindromeCheckerApp {
 
@@ -67,7 +70,7 @@ public class PalindromeCheckerApp {
 
 
         // ================= UC4 =================
-        // Palindrome Using Character Array (Two Pointer)
+        // Palindrome Using Character Array
 
         char[] characters = original.toCharArray();
 
@@ -104,14 +107,12 @@ public class PalindromeCheckerApp {
 
         Stack<Character> stack = new Stack<>();
 
-        // Push characters into stack
         for(int i = 0; i < original.length(); i++) {
             stack.push(original.charAt(i));
         }
 
         boolean stackPalindrome = true;
 
-        // Pop and compare
         for(int i = 0; i < original.length(); i++) {
 
             if(original.charAt(i) != stack.pop()) {
@@ -123,6 +124,41 @@ public class PalindromeCheckerApp {
         System.out.println("UC5 Result (Using Stack):");
 
         if(stackPalindrome) {
+            System.out.println(original + " is a Palindrome");
+        }
+        else {
+            System.out.println(original + " is NOT a Palindrome");
+        }
+
+        System.out.println();
+
+
+        // ================= UC6 =================
+        // FIFO vs LIFO using Queue and Stack
+
+        Queue<Character> queue = new LinkedList<>();
+        Stack<Character> stack2 = new Stack<>();
+
+        // Insert characters
+        for(int i = 0; i < original.length(); i++) {
+            queue.add(original.charAt(i));   // Enqueue
+            stack2.push(original.charAt(i)); // Push
+        }
+
+        boolean fifoLifoPalindrome = true;
+
+        // Compare dequeue and pop
+        for(int i = 0; i < original.length(); i++) {
+
+            if(queue.remove() != stack2.pop()) {
+                fifoLifoPalindrome = false;
+                break;
+            }
+        }
+
+        System.out.println("UC6 Result (Queue vs Stack):");
+
+        if(fifoLifoPalindrome) {
             System.out.println(original + " is a Palindrome");
         }
         else {
