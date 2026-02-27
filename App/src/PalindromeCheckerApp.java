@@ -4,39 +4,43 @@
  * UC1 - Application Entry & Welcome Message
  * UC2 - Hardcoded Palindrome Result
  * UC3 - Palindrome Using String Reverse
- * UC4 - Palindrome Using Character Array (Two Pointer)
+ * UC4 - Palindrome Using Character Array
  * UC5 - Palindrome Using Stack
  * UC6 - FIFO vs LIFO using Queue and Stack
  * UC7 - Palindrome Using Deque
+ * UC8 - Palindrome Using Singly Linked List
  */
 
-import java.util.Stack;
-import java.util.Queue;
-import java.util.LinkedList;
-import java.util.Deque;
-import java.util.ArrayDeque;
+import java.util.*;
 
 public class PalindromeCheckerApp {
 
     static final String APP_NAME = "PalindromeChecker";
     static final String APP_VERSION = "Version 2.0";
 
+    // ===== Node Class for Linked List (UC8) =====
+    static class Node {
+        char data;
+        Node next;
+
+        Node(char d) {
+            data = d;
+            next = null;
+        }
+    }
+
     public static void main(String[] args) {
 
         // ========== UC1 ==========
-        // Welcome Message
-
         System.out.println("=================================");
         System.out.println("Welcome to " + APP_NAME + " " + APP_VERSION);
         System.out.println("=================================");
         System.out.println();
 
-
-        // ========== UC2 ==========
-        // Hardcoded Palindrome
-
         String original = "madam";
 
+
+        // ========== UC2 ==========
         System.out.println("UC2 Result:");
 
         if(original.equals("madam"))
@@ -48,8 +52,6 @@ public class PalindromeCheckerApp {
 
 
         // ========== UC3 ==========
-        // Reverse String Method
-
         String reversed = "";
 
         for(int i = original.length()-1; i>=0; i--)
@@ -66,9 +68,7 @@ public class PalindromeCheckerApp {
 
 
         // ========== UC4 ==========
-        // Character Array Two Pointer
-
-        char[] arr = original.toCharArray();
+        char arr[] = original.toCharArray();
 
         int start = 0;
         int end = arr.length-1;
@@ -97,8 +97,6 @@ public class PalindromeCheckerApp {
 
 
         // ========== UC5 ==========
-        // Stack Method
-
         Stack<Character> stack = new Stack<>();
 
         for(int i=0;i<original.length();i++)
@@ -126,8 +124,6 @@ public class PalindromeCheckerApp {
 
 
         // ========== UC6 ==========
-        // Queue vs Stack
-
         Queue<Character> queue = new LinkedList<>();
         Stack<Character> stack2 = new Stack<>();
 
@@ -159,25 +155,18 @@ public class PalindromeCheckerApp {
 
 
         // ========== UC7 ==========
-        // Deque Method (Front and Rear Comparison)
-
         Deque<Character> deque = new ArrayDeque<>();
 
-        // Insert characters
         for(int i=0;i<original.length();i++)
             deque.addLast(original.charAt(i));
 
         boolean result7 = true;
 
-        // Remove first and last and compare
-        while(deque.size() > 1)
+        while(deque.size()>1)
         {
-            char first = deque.removeFirst();
-            char last = deque.removeLast();
-
-            if(first != last)
+            if(deque.removeFirst()!=deque.removeLast())
             {
-                result7 = false;
+                result7=false;
                 break;
             }
         }
@@ -185,6 +174,78 @@ public class PalindromeCheckerApp {
         System.out.println("UC7 Result:");
 
         if(result7)
+            System.out.println(original + " is a Palindrome");
+        else
+            System.out.println(original + " is NOT a Palindrome");
+
+        System.out.println();
+
+
+        // ========== UC8 ==========
+        // Singly Linked List Method
+
+        Node head = null;
+        Node tail = null;
+
+        // Convert string to linked list
+        for(int i=0;i<original.length();i++)
+        {
+            Node newNode = new Node(original.charAt(i));
+
+            if(head==null)
+            {
+                head=newNode;
+                tail=newNode;
+            }
+            else
+            {
+                tail.next=newNode;
+                tail=newNode;
+            }
+        }
+
+        // Find middle using fast & slow pointer
+        Node slow=head;
+        Node fast=head;
+
+        while(fast!=null && fast.next!=null)
+        {
+            slow=slow.next;
+            fast=fast.next.next;
+        }
+
+        // Reverse second half
+        Node prev=null;
+        Node curr=slow;
+
+        while(curr!=null)
+        {
+            Node next=curr.next;
+            curr.next=prev;
+            prev=curr;
+            curr=next;
+        }
+
+        // Compare halves
+        Node first=head;
+        Node second=prev;
+
+        boolean result8=true;
+
+        while(second!=null)
+        {
+            if(first.data!=second.data)
+            {
+                result8=false;
+                break;
+            }
+            first=first.next;
+            second=second.next;
+        }
+
+        System.out.println("UC8 Result:");
+
+        if(result8)
             System.out.println(original + " is a Palindrome");
         else
             System.out.println(original + " is NOT a Palindrome");
