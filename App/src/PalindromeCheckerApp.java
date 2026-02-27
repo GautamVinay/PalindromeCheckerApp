@@ -12,6 +12,7 @@
  * UC9  - Recursive Palindrome Checker
  * UC10 - Case-Insensitive & Space-Ignored Palindrome
  * UC11 - Object-Oriented Palindrome Service
+ * UC12 - Strategy Pattern for Palindrome Algorithms
  */
 
 import java.util.*;
@@ -49,7 +50,6 @@ public class PalindromeCheckerApp {
     // ===== UC11 OOP Palindrome Service =====
     static class PalindromeChecker {
 
-        // Encapsulated Method
         public boolean checkPalindrome(String text){
 
             char arr[] = text.toCharArray();
@@ -64,6 +64,53 @@ public class PalindromeCheckerApp {
 
                 start++;
                 end--;
+            }
+
+            return true;
+        }
+    }
+
+
+    // ===== UC12 Strategy Interface =====
+    interface PalindromeStrategy {
+        boolean check(String text);
+    }
+
+
+    // Stack Strategy
+    static class StackStrategy implements PalindromeStrategy {
+
+        public boolean check(String text){
+
+            Stack<Character> stack=new Stack<>();
+
+            for(char c:text.toCharArray())
+                stack.push(c);
+
+            for(char c:text.toCharArray()){
+                if(c!=stack.pop())
+                    return false;
+            }
+
+            return true;
+        }
+    }
+
+
+    // Deque Strategy
+    static class DequeStrategy implements PalindromeStrategy {
+
+        public boolean check(String text){
+
+            Deque<Character> deque=new ArrayDeque<>();
+
+            for(char c:text.toCharArray())
+                deque.addLast(c);
+
+            while(deque.size()>1){
+
+                if(deque.removeFirst()!=deque.removeLast())
+                    return false;
             }
 
             return true;
@@ -313,6 +360,37 @@ public class PalindromeCheckerApp {
         System.out.println("UC11 Result:");
 
         if(result11)
+            System.out.println(original+" is a Palindrome");
+        else
+            System.out.println(original+" is NOT a Palindrome");
+
+
+        System.out.println();
+
+
+        // ===== UC12 Strategy Pattern =====
+
+        PalindromeStrategy strategy;
+
+        strategy=new StackStrategy();
+
+        boolean result12a=strategy.check(original);
+
+        System.out.println("UC12 Stack Strategy Result:");
+
+        if(result12a)
+            System.out.println(original+" is a Palindrome");
+        else
+            System.out.println(original+" is NOT a Palindrome");
+
+
+        strategy=new DequeStrategy();
+
+        boolean result12b=strategy.check(original);
+
+        System.out.println("UC12 Deque Strategy Result:");
+
+        if(result12b)
             System.out.println(original+" is a Palindrome");
         else
             System.out.println(original+" is NOT a Palindrome");
