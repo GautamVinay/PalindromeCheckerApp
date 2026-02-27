@@ -1,5 +1,5 @@
 
-public class PalindromeChecker {
+public class PalindromeCheckerApp {
 
     // Application constants
     static final String APP_NAME = "PalindromeChecker";
