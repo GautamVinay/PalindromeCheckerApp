@@ -5,7 +5,10 @@
  * UC2 - Hardcoded Palindrome Result
  * UC3 - Palindrome Using String Reverse
  * UC4 - Palindrome Using Character Array (Two-Pointer)
+ * UC5 - Palindrome Using Stack
  */
+
+import java.util.Stack;
 
 public class PalindromeCheckerApp {
 
@@ -30,12 +33,12 @@ public class PalindromeCheckerApp {
 
         String original = "madam";
 
+        System.out.println("UC2 Result:");
+
         if(original.equals("madam")) {
-            System.out.println("UC2 Result:");
             System.out.println(original + " is a Palindrome");
         }
         else {
-            System.out.println("UC2 Result:");
             System.out.println(original + " is NOT a Palindrome");
         }
 
@@ -87,6 +90,39 @@ public class PalindromeCheckerApp {
         System.out.println("UC4 Result (Using Character Array):");
 
         if(isPalindrome) {
+            System.out.println(original + " is a Palindrome");
+        }
+        else {
+            System.out.println(original + " is NOT a Palindrome");
+        }
+
+        System.out.println();
+
+
+        // ================= UC5 =================
+        // Palindrome Using Stack
+
+        Stack<Character> stack = new Stack<>();
+
+        // Push characters into stack
+        for(int i = 0; i < original.length(); i++) {
+            stack.push(original.charAt(i));
+        }
+
+        boolean stackPalindrome = true;
+
+        // Pop and compare
+        for(int i = 0; i < original.length(); i++) {
+
+            if(original.charAt(i) != stack.pop()) {
+                stackPalindrome = false;
+                break;
+            }
+        }
+
+        System.out.println("UC5 Result (Using Stack):");
+
+        if(stackPalindrome) {
             System.out.println(original + " is a Palindrome");
         }
         else {
